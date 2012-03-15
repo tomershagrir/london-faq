@@ -1,0 +1,14 @@
+
+    >>> from faq.models import Question
+
+    >>> q1 = Question()
+    >>> q1['title'] = 'How to start in gardening?'
+    >>> q1['answer'] = 'Take your hoe and start to plow.'
+    >>> q1['is_published'] = True
+    >>> q1['tags'] = ['gardening','how-to','diy']
+    >>> isinstance(q1.save(), Question)
+    True
+
+    >>> Question.query().published().count()
+    1
+
