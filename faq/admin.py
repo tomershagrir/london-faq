@@ -1,9 +1,10 @@
 from london.apps import admin
 from london import forms
+from london.apps.admin.modules import BaseModuleForm
 
 from models import Question
 
-class FormQuestion(forms.ModelForm):
+class FormQuestion(BaseModuleForm):
     class Meta:
         model = Question
 
