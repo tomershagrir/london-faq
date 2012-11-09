@@ -33,7 +33,7 @@ class Question(models.Model):
     owner = models.CharField(max_length=100)
     text = models.CharField(max_length=250)
     is_published = models.BooleanField(default=False, db_index=True)
-    comments = models.ManyToManyField('Comment', blank=True, related_name='questions', delete_cascade=True)
+    comments = models.ManyToManyField(Comment, blank=True, related_name='comments', delete_cascade=True)
     status = models.CharField(max_length=10, choices=QUESTION_STATUS_CHOICES,
         default=QUESTION_STATUS_PENDING, db_index=True)
     modified_date = models.DateTimeField(blank=True, default=datetime.datetime.now, db_index=True)
