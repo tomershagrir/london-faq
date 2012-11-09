@@ -18,6 +18,10 @@ class QuestionQuerySet(models.QuerySet):
     def published(self):
         return self.filter(is_published=True)
 
+    def root_comments(self):
+        comments = Comment.query().filter(parent_comment=None)
+        return self.filter(comments__in=[comments])
+
 
 class Question(models.Model):
     class Meta:
