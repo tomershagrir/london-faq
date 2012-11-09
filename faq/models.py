@@ -18,10 +18,6 @@ class QuestionQuerySet(models.QuerySet):
     def published(self):
         return self.filter(is_published=True)
 
-    def root_comments(self):
-        comments = Comment.query().filter(parent_comment=None)
-        return self.filter(comments__in=[comments])
-
 
 class Question(models.Model):
     class Meta:
@@ -45,4 +41,8 @@ class Question(models.Model):
     def __unicode__(self):
         return self['text']
 
-
+    @property
+    def root_comments(self):
+        for comment in self.comments:
+            if comment['parent_comment'] is None:
+                yield comment
