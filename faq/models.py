@@ -43,6 +43,6 @@ class Question(models.Model):
 
     @property
     def root_comments(self):
-        for comment in self.comments:
+        for comment in self['comments']:
             if comment['parent_comment'] is None:
                 yield comment
