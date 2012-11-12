@@ -30,10 +30,9 @@ class Question(models.Model):
 
     @property
     def root_answers(self):
-        return self.query().filter(answer__parent_answer=None)
-#        for answer in self['answers']:
-#            if answer['parent_answer'] is None:
-#                yield answer
+        for answer in self['answers']:
+            if answer['parent_answer'] is None:
+                yield answer
 
 
 class Answer(models.Model):
