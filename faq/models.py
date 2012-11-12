@@ -9,6 +9,7 @@ class Comment(models.Model):
         related_name='children_comments', delete_cascade=True)
     text = models.TextField()
     modified_date = models.DateTimeField(blank=True, default=datetime.datetime.now, db_index=True)
+    question = models.ForeignKey(Question, related_name='question')
 
     def __unicode__(self):
         return self['text']
