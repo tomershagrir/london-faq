@@ -3,18 +3,6 @@ import datetime
 from london.db import models
 
 
-class Comment(models.Model):
-    owner = models.CharField(max_length=100)
-    parent_comment = models.ForeignKey('self', null=True, blank=True,
-        related_name='children_comments', delete_cascade=True)
-    text = models.TextField()
-    modified_date = models.DateTimeField(blank=True, default=datetime.datetime.now, db_index=True)
-    question = models.ForeignKey(Question, related_name='question')
-
-    def __unicode__(self):
-        return self['text']
-
-
 class QuestionQuerySet(models.QuerySet):
     def published(self):
         return self.filter(is_published=True)
@@ -33,8 +21,6 @@ class Question(models.Model):
 
     owner = models.CharField(max_length=100)
     text = models.CharField(max_length=250)
-    is_published = models.BooleanField(default=False, db_index=True)
-    comments = models.ManyToManyField(Comment, blank=True, related_name='comments', delete_cascade=True)
     status = models.CharField(max_length=10, choices=QUESTION_STATUS_CHOICES,
         default=QUESTION_STATUS_PENDING, db_index=True)
     modified_date = models.DateTimeField(blank=True, default=datetime.datetime.now, db_index=True)
@@ -47,3 +33,15 @@ class Question(models.Model):
         for comment in self['comments']:
             if comment['parent_comment'] is None:
                 yield comment
+
+
+class Comment(models.Model):
+    question = models.ForeignKey(Question, related_name="comments", delete_cascade=True)
+    owner = models.CharField(max_length=100)
+    parent_comment = models.ForeignKey('self', null=True, blank=True,
+        related_name='children_comments', delete_cascade=True)
+    text = models.TextField()
+    modified_date = models.DateTimeField(blank=True, default=datetime.datetime.now, db_index=True)
+
+    def __unicode__(self):
+        return self['text']

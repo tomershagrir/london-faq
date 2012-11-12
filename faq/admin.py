@@ -23,7 +23,7 @@ class ModuleQuestion(admin.CrudModule):
 
 class ModuleComment(admin.CrudModule):
     model = Comment
-    list_display = ('modified_date', 'owner', 'text', 'parent_comment', 'question')
+    list_display = ('modified_date', 'owner', 'text', 'question', 'parent_comment')
     form = FormComment
 
 class AppFAQ(admin.AdminApplication):
