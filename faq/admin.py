@@ -28,5 +28,5 @@ class ModuleComment(admin.CrudModule):
 
 class AppFAQ(admin.AdminApplication):
     title = 'FAQ'
-    modules = (ModuleQuestion,)
+    modules = (ModuleQuestion, ModuleComment)
 
