@@ -29,17 +29,18 @@ class Question(models.Model):
         return self['text']
 
     @property
-    def root_comments(self):
-        for comment in self['comments']:
-            if comment['parent_comment'] is None:
-                yield comment
+    def root_answers(self):
+        return self.query().filter(answer__parent_answer=None)
+#        for answer in self['answers']:
+#            if answer['parent_answer'] is None:
+#                yield answer
 
 
-class Comment(models.Model):
-    question = models.ForeignKey(Question, related_name="comments", delete_cascade=True)
+class Answer(models.Model):
+    question = models.ForeignKey(Question, related_name="answers", delete_cascade=True)
     owner = models.CharField(max_length=100)
-    parent_comment = models.ForeignKey('self', null=True, blank=True,
-        related_name='children_comments', delete_cascade=True)
+    parent_answer = models.ForeignKey('self', null=True, blank=True,
+        related_name='children_answers', delete_cascade=True)
     text = models.TextField()
     modified_date = models.DateTimeField(blank=True, default=datetime.datetime.now, db_index=True)
 

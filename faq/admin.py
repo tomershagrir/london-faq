@@ -2,7 +2,7 @@ from london.apps import admin
 from london import forms
 from london.apps.admin.modules import BaseModuleForm
 
-from models import Question, Comment
+from models import Question, Answer
 
 class FormQuestion(BaseModuleForm):
     class Meta:
@@ -12,20 +12,20 @@ class FormQuestion(BaseModuleForm):
 #        self.fields['tags'].widget = forms.ListByCommaInput()
 
 
-class FormComment(BaseModuleForm):
+class FormAnswer(BaseModuleForm):
     class Meta:
-        model = Comment
+        model = Answer
 
 class ModuleQuestion(admin.CrudModule):
     model = Question
-    list_display = ('modified_date', 'owner', 'text', 'is_published', 'status')
+    list_display = ('modified_date', 'owner', 'text', 'status')
     form = FormQuestion
 
-class ModuleComment(admin.CrudModule):
-    model = Comment
-    list_display = ('modified_date', 'owner', 'text', 'question', 'parent_comment')
-    form = FormComment
+class ModuleAnswer(admin.CrudModule):
+    model = Answer
+    list_display = ('modified_date', 'owner', 'text', 'question', 'parent_answer')
+    form = FormAnswer
 
 class AppFAQ(admin.AdminApplication):
     title = 'FAQ'
-    modules = (ModuleQuestion, ModuleComment)
+    modules = (ModuleQuestion, ModuleAnswer)
