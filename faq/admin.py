@@ -18,12 +18,12 @@ class FormAnswer(BaseModuleForm):
 
 class ModuleQuestion(admin.CrudModule):
     model = Question
-    list_display = ('modified_date', 'author', 'text', 'status')
+    list_display = ('modified_date', 'text', 'status')
     form = FormQuestion
 
 class ModuleAnswer(admin.CrudModule):
     model = Answer
-    list_display = ('modified_date', 'author', 'text', 'question', 'parent_answer')
+    list_display = ('modified_date', 'text', 'question', 'parent_answer')
     form = FormAnswer
 
 class AppFAQ(admin.AdminApplication):
