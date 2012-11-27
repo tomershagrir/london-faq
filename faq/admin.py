@@ -7,6 +7,7 @@ from models import Question, Answer
 class FormQuestion(BaseModuleForm):
     class Meta:
         model = Question
+        exclude = ('author',)
 
 #    def initialize(self):
 #        self.fields['tags'].widget = forms.ListByCommaInput()
@@ -15,6 +16,7 @@ class FormQuestion(BaseModuleForm):
 class FormAnswer(BaseModuleForm):
     class Meta:
         model = Answer
+        exclude = ('author',)
 
 class ModuleQuestion(admin.CrudModule):
     model = Question
