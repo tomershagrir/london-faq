@@ -22,11 +22,13 @@ class ModuleQuestion(admin.CrudModule):
     model = Question
     list_display = ('modified_date', 'text', 'status')
     form = FormQuestion
+    exclude = ('author',)
 
 class ModuleAnswer(admin.CrudModule):
     model = Answer
     list_display = ('modified_date', 'text', 'question', 'parent_answer')
     form = FormAnswer
+    exclude = ('author',)
 
 class AppFAQ(admin.AdminApplication):
     title = 'FAQ'
