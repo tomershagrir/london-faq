@@ -1,6 +1,7 @@
 import datetime
 
 from london.db import models
+from london.exceptions import ObjectDoesNotExist
 
 
 class QuestionQuerySet(models.QuerySet):
@@ -37,7 +38,10 @@ class Question(models.Model):
 
     def get_author(self):
         if isinstance(self['author'], dict) and 'pk' in self['author'] and 'class' in self['author']:
-            return self['author']['class'].query().get(pk=self['author']['pk'])
+            try:
+                return self['author']['class'].query().get(pk=self['author']['pk'])
+            except ObjectDoesNotExist:
+                return None
 
         return self['author']
 
@@ -55,6 +59,9 @@ class Answer(models.Model):
 
     def get_author(self):
         if isinstance(self['author'], dict) and 'pk' in self['author'] and 'class' in self['author']:
-            return self['author']['class'].query().get(pk=self['author']['pk'])
+            try:
+                return self['author']['class'].query().get(pk=self['author']['pk'])
+            except ObjectDoesNotExist:
+                return None
 
         return self['author']
